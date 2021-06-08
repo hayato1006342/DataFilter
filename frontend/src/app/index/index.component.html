@@ -1,0 +1,37 @@
+<app-navbar></app-navbar>
+
+<body>
+  <header>
+  <div class="video-background-holder">
+    <div class="overlay"></div>
+  <video playsinline='playsinline' autoplay='autoplay'  muted='muted' loop='loop'>
+    <source src="../../assets/videos/mujer.mp4" type="video/mp4">
+  </video>
+  <div class="container h-100">
+    <div class="d-flex h-100 text-center align-items-center">
+      <div class="w-100 text-white">
+        <h1 class="display-3">DATA FILTER</h1>
+        <p class="lead mb-0">te da la bienvenida.</p>
+      </div>
+    </div>
+  </div>
+  </div>
+</header>
+
+
+
+  <section class="py-5">
+    <div class="container py-5">
+      <div class="row">
+        <div class="col-lg-8 mx-auto">
+          <p class="lead">Sea usted bienvenido señor usuario a nuestro aplicativo web, si usted es un cliente interesado en visualizar el estado de su dispositivo, solo tiene que 
+            oprimir el botón de abajo el cual lo llevará a una página donde deberá escribir el número de su cédula  para poder verlo.</p>
+          <p class="lead"></p>
+          <button type="button" [routerLink]="['/consult']" class="btn btn-primary">Consultar</button>
+        </div>
+      </div>
+    </div>
+  </section>
+</body>
+
+<app-footer></app-footer>

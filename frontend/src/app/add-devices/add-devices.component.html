@@ -1,0 +1,110 @@
+<div class="container mt-5">
+    <div class="row">
+        <div class="col-md-12">
+            <div id="accordion" class="checkout">
+                <div class="panel checkout-step">
+                    <div> 
+                        <h4 class="checkout-step-title"> <a role="button"  data-parent="#accordion"  > Consultar cliente</a></h4>
+                    </div>
+                    <div id="collapseOne" >
+                        <div class="checkout-step-body">
+                            <p *ngIf="!btnnext" >Consulta si el cliente ya se encuentra registrado.</p>
+                            <div class="row">
+                                <div class="col-lg-8">
+                                    <div class="checkout-login" *ngIf="!btnnext">
+                                        <form [formGroup]='formConsult' (ngSubmit)="onSubmit() ">
+                                            <div>
+                                                <input type="text" class="form-control" formControlName="consult"  placeholder="Numero de Identificacion">
+                                            </div>
+                                            <div  *ngIf="consult.invalid && (consult.dirty || consult.touched)">
+                                                <p style="color: red;"> ** EL campo no puede contener letras o caracteres especiales</p>
+                                            </div>
+                                            <br>
+                                            <button type="submit" *ngIf="!btnnext" class="btn btn-primary" >Consultar</button>
+                                        </form>
+                                    </div>
+                                </div>
+                            </div>
+                            <div *ngIf="btnnext">
+                                <div *ngFor="let i of clientdata">
+                                    <p>Nombre: {{i.name}} </p>
+                                    <p>Apellido: {{i.surname}} </p>
+                                    <p>Cédula: {{i.consult}} </p>
+                                </div>
+                                <a class="collapsed btn btn-default mr-1 btn btn-success" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">Siguiente</a>
+                                <a class="btn btn-danger" (click)="btnCancel()" >Cancelar</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div *ngIf="btnnext" class="panel checkout-step">
+                    <div > 
+                        <h4 class="checkout-step-title"> <a  role="button" data-parent="#accordion"  > Ingreso de dispositivo</a> </h4>
+                    </div>
+                    <div id="collapseTwo" class="panel-collapse collapse">
+                        <div class="checkout-step-body">
+                            <div class="checout-address-step">
+                                <div class="row">
+                                    <form [formGroup]="formDevice" (ngSubmit)="OnSubmitDevice()">
+                                        
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label" for="equipo">Equipo</label>
+                                                <input id="equipo"  type="text" placeholder="Nombre del equipo" formControlName='device' class="form-control input-md" required="" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label" for="modelo">Modelo</label>
+                                                <input id="modelo" type="text" placeholder="Modelo del equipo" formControlName='model' class="form-control input-md" required="" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label" for="marca">Marca</label>
+                                                <input id="marca"  type="text" placeholder="Marca del equipo" formControlName='brand' class="form-control input-md" required="" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label" for="serial">Serial</label>
+                                                <input id="serial" type="text" placeholder="Serial del equipo" formControlName='serial' class="form-control input-md" required="" autocomplete="off">
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label" for="accesorios">Accesorios</label>
+                                                <p style="color: rgb(252, 118, 118);">En este campo ingresará los accesorios que vienen conjuntamente con el dispositivo</p>
+                                                <textarea id="accesorios"  type="text" placeholder="Accesorios del equipo" formControlName='accessories' class="form-control input-md" required="" autocomplete="off"></textarea>
+                                            </div>
+                                        </div>
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label" for="estado">Estado del producto</label>
+                                                <textarea id="estado"  type="text" placeholder="Estado en que se encuentra el equipo"  formControlName='condition' class="form-control input-md" required="" autocomplete="off"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <label class="control-label" for="otros">Trabajo a realizar</label>
+                                                <textarea id="otros" type="text" placeholder="Datos que desee anexar" formControlName='work_to_do' class="form-control input-md" required="" autocomplete="off"></textarea>
+                                            </div>
+                                        </div>
+
+                                        <!-- Button -->
+                                        <div class="form-group">
+                                            <div class="col-md-12">
+                                                <button id="singlebutton" name="singlebutton" class="btn btn-primary">Guardar</button>
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

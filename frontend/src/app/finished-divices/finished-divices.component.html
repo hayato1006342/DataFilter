@@ -1,0 +1,126 @@
+
+<br>
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand"></a>
+  <div  class="form-inline" >
+    <input  class="form-control mr-sm-2" (keyup)="search($event.target.value)"  type="search" placeholder="Buscar por cedula" aria-label="Search">
+  </div>
+</nav>
+
+<div class="container">
+<div class="col-md-14 col-14 col-sm-14">
+    <div class="card">
+      <div class="card-header">
+        <h4>Dispositivos finalizados</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tbody><tr>
+                <th>Documento</th>
+                <th>Equipo</th>
+                <th>Modelo</th>
+                <th>Marca</th>
+                <th>Fecha de finalizacion</th>
+                <th>Trabajo realido por</th>
+                <th>Opciones</th>
+                <th></th>
+            </tr>
+            <ng-container *ngIf="data != 0">
+              <tr *ngFor="let i of data">
+                <td>{{i.client}}</td>
+                <td>{{i.type}}</td>
+                <td>{{i.model}}</td>
+                <td>{{i.brand}}</td>
+                <td>{{i.finish_date | date : 'short'}}</td>
+                <td style="color: red;">@{{i.name}}</td>
+                <td>
+                  <a class="btn btn-light btn-action mr-1 btn-modal" (click)="moreInfo(i.id)" class="btn" data-toggle="modal" data-target="#fsModal">
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                      <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                      <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                    </svg>
+                  </a>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-success" (click)="removeDevice(i.id)">Retirar</button>
+                </td>
+              </tr>
+            </ng-container>
+          </tbody></table>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="fsModal"
+     class="modal animated bounceIn"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-body"> 
+        <div class="card">
+          <ul class="list-group list-group-flush" *ngFor="let i of more">
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del propietario</b></li>
+            <li class="list-group-item">
+              <br>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                    <b style="font-size: medium;">Nombre</b> <br> {{i.c_name}} {{i.c_surname}}
+                  </div>
+                  <div class="col-sm">
+                    <b style="font-size: medium;">Teléfono</b> <br> {{i.c_phone}}
+                  </div>
+                  <div class="col-sm" >
+                    <b style="font-size: medium;">Correo</b> <br> {{i.c_email}}
+                  </div>
+                </div>
+              </div> </li>
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del dispositivo</b>
+
+            </li>
+            <li class="list-group-item">
+              <b>Equipo:</b> {{i.type}}
+              <hr>
+              <b>Marca:</b> {{i.brand}}
+              <hr>
+              <b>Modelo:</b> {{i.model}}
+              <hr>
+              <b>Accesorios:</b> {{i.accessories}}
+              <hr>
+              <b>Estado del producto:</b> {{i.conditions}}
+              <hr>
+              <b>Trabajo a realizar:</b> {{i.work_to_do}}
+              <hr>
+              <b>Usuario que ingreso el dispositivo:</b> {{i.user}} , <b>Fecha de ingreso:</b> {{ i.admission_date | date : 'short' }}
+            </li>
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Detalles de la reparación</b>
+            <li class="list-group-item">
+              <b>Falla:</b> {{i.failure}}
+              <hr>
+              <b>Diagnóstico:</b> {{i.diagnosis}}
+              <hr>
+              <b>Solución:</b> {{i.solution}}
+              <hr>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary"
+                data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>

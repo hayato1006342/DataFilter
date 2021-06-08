@@ -1,0 +1,123 @@
+<app-navbar></app-navbar>
+
+  <div class="container-fluid">
+    <div class="row mh-100vh">
+        <div class="col-lg-6 d-flex align-items-end" id="bg-block" style="background: url('https://image.freepik.com/foto-gratis/marketing-digital-empresario-tableta-digital-documentos-sobre-fondo-escritorio-oficina_2034-1650.jpg') center center / cover;">
+            <p class="ml-auto small text-dark mb-2"><br></p>
+        </div>
+        <div class="col-10 col-sm-8 col-md-6 col-lg-6 offset-1 offset-sm-2 offset-md-3 offset-lg-0 align-self-center d-lg-flex align-items-lg-center align-self-lg-stretch bg-white p-5 rounded rounded-lg-0 my-5 my-lg-0" id="login-block">
+            <header></header>
+            <div class="m-auto w-lg-75 w-xl-50">
+                <h2 class="text-info font-weight-light mb-5" style="text-align: center;">&nbsp;Registro</h2>
+                <form style="text-align: left;" [formGroup]="form" (ngSubmit)="onSubmit()">
+                    <div class="form-group">
+                        <label class="text-secondary">Nombre</label>
+                        <input formControlName="name" class="form-control" type="text" style="border-radius: 26px;">
+                        <small *ngIf="name.invalid && (name.dirty || name.touched)" style="color: red;">No cumple con los requisitos</small>
+                        <small *ngIf="name.valid && (name.dirty || name.touched)" style="color: green;">Cumple con los requisitos</small>
+                    </div>
+                    <div class="form-group"><label class="text-secondary">Apellido</label>
+                        <input formControlName="surname" class="form-control" type="text" style="border-radius: 26px;">
+                        <small *ngIf="surname.invalid && (surname.dirty || surname.touched)" style="color: red;">No cumple con los requisitos</small>
+                        <small *ngIf="surname.valid && (surname.dirty || surname.touched)" style="color: green;">Cumple con los requisitos</small>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-secondary">Email</label>
+                        <input formControlName="email" class="form-control" type="text"  pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,15}$" inputmode="email" style="border-radius: 26px;">
+                        <small *ngIf="email.invalid && (email.dirty || email.touched)" style="color: red;">No cumple con los requisitos</small>
+                        <small *ngIf="email.valid && (email.dirty || email.touched)" style="color: green;">Cumple con los requisitos</small>
+                    </div>
+                    <div class="form-group" style="border-style: none;">
+                        <label class="text-secondary">Contraseña</label>
+                        <input formControlName="password" class="form-control" type="password"  style="border-radius: 26px;">
+                        <small *ngIf="password.invalid && (password.dirty || password.touched)" style="color: red;">Debe tener mínimo 8 caracteres</small>
+                        <small *ngIf="password.valid && (password.dirty || password.touched)" style="color: green;">Cumple con los requisitos</small>
+                    </div>
+                    <div class="form-group">
+                        <label class="text-secondary">Confirmar contraseña</label>
+                        <input formControlName="validatepassword" class="form-control" type="password"  style="border-radius: 26px;">
+                        <!-- <small *ngIf="validatepassword != password" style="color: red;">No cumple con los requisitos</small> -->
+                        <small *ngIf="validatepassword.invalid && (validatepassword.dirty || validatepassword.touched)" style="color: red;">Debe tener mínimo 8 caracteres</small>
+                        <small *ngIf="validatepassword.valid && (validatepassword.dirty || validatepassword.touched)" style="color: green;">Cumple con los requisitos</small>
+                    </div>
+                    <div class="form-group">
+                        <div class="form-check">
+                            <input class="form-check-input"  type="checkbox" formControlName="checkbox" id="formCheck-1">
+                            <label class="form-check-label" for="formCheck-1">
+                                <a type="button" class="btn" data-toggle="modal" data-target="#staticBackdrop">Acepto los términos y condiciones&nbsp;</a>
+                            </label></div>
+                    </div>
+                    <div></div>
+                    <button *ngIf="spinner" class="btn btn-info mt-2" type="submit" style="text-align: right;">Registrarse</button>
+                    <div *ngIf="!spinner"  class="spinner-border text-primary" role="status">
+                        <span class="sr-only">Cargando...</span>
+                    </div>
+                </form>
+                <p class="mt-3 mb-0" style="text-align: left;"></p>
+            </div>
+            <div></div>
+            <header></header>
+        </div>
+    </div>
+</div>
+  
+<app-footer></app-footer>
+
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="staticBackdropLabel">Términos y condiciones</h5>
+        </div>
+        <div class="modal-body">
+          <strong>CONSENTIMIENTO INFORMADO</strong>
+          <br><br>
+          <p>
+            Dando cumplimento a Ley 1581 de 2012 Nivel Nacional “Por la cual se dictan disposiciones generales para la protección de datos personales”. Usted, autoriza a <b>CODEGROUP</b>, afiliadas, divisiones, sucesores, cesionarios y aquellos que actúen bajo su expresa autorización, a tratar mis datos, 
+            ya sea para fines estadísticos, de comunicación, y en general para asegurar el normal desarrollo del aplicativo. Acepto que mi información personal podrá ser recolectada de forma directa por <b>DATAFILTER </b>a través de terceros con los que ésta tenga una relación contractual vigente. Mis datos 
+            personales, podrán ser objeto de tratamiento y su uso, circulación, recolección, actualización, transferencia y transmisión podrá hacerse a nivel nacional e internacional.
+          </p>
+
+          <strong>POLÍTICA DE PROTECCIÓN DE DATOS PERSONALES</strong>
+          <br><br>
+
+          <p>
+            Cumpliendo con lo establecido en la Constitución Política de Colombia (arts. 15 y 20), la Ley 1581 de 2012 "por la cual se dictan disposiciones generales para la protección de datos personales" y el Decreto 1377 de 2013 "por el cual se reglamenta parcialmente la Ley 1581 de 2012" y al compromiso institucional en cuanto al tratamiento de la información.
+            <b>CODEGROUP</b> está especialmente sensibilizado en la protección de los datos de los USUARIOS de los servicios a los que se accede a través de su web. Mediante la presente Política de Privacidad <b>CODEGROUP</b> informa a los USUARIOS del sitio web: <b>DATAFILTER </b>del tratamiento y usos a los que se someten los datos de carácter personal que se recaban en la web, con el fin de que decidan, libre y voluntariamente, si desean facilitar la información solicitada.
+            
+            <b><b>CODEGROUP</b></b> se reserva la facultad de modificar esta Política con el objeto de adaptarla a novedades legislativas, criterios jurisprudenciales, prácticas del sector, o intereses de la entidad. Cualquier modificación en la misma será anunciada con la debida antelación, a fin de que tengas perfecto conocimiento de su contenido.
+            
+            Ciertos servicios prestados en el portal pueden contener condiciones particulares con previsiones en materia de protección de Datos Personales. De ellos puedes informarte en los correspondientes apartados.
+          </p>
+
+          <strong>TITULARIDAD DEL TRATAMIENTO</strong>
+          <br><br>
+          <p>En dichos supuestos, los datos recabados por <b>CODEGROUP</b> serán incorporados a ficheros titularidad de <b>CODEGROUP</b>, debidamente inscritos en el Registro General de Protección de Datos.</p>
+
+          <strong>USOS Y FINALIDADES</strong>
+
+          <p>La finalidad de la recogida y tratamiento de los datos personales es la gestión, prestación y personalización de los servicios y contenidos del mismo que el USUARIO utilice y de la cual se informará en cada apartado.</p>
+
+          <strong>COMUNICACIÓN DE LOS DATOS</strong>
+
+          <p>Los datos recabados a través de la web sólo serán cedidos en aquellos casos en que expresamente se informe de ello al USUARIO.</p>
+
+          <strong>ACTUALIZACIÓN DE LOS DATOS</strong>
+
+          <p>Con el fin de que los datos obrantes en nuestras bases de datos siempre correspondan a tu situación real deberás mantenerlos actualizados, bien actualizándolos tú directamente en los caso en que ello sea posible bien comunicándolo al departamento correspondiente.</p>
+
+          <strong>UTILIZACIÓN DE COOKIES</strong>
+
+          <p>Con el objeto de proteger la intimidad de los usuarios de su página web <b>CODEGROUP</b> no emplea cookies cuando los mismos navegan por la misma.</p>
+
+          <strong>SEGURIDAD DE LOS DATOS</strong>
+          
+          <p><b>CODEGROUP</b> ha adoptado en su sistema de información las medidas técnicas y organizativas legalmente requeridas, a fin de garantizar la seguridad y confidencialidad de los datos almacenados, evitando así, en la medida de lo posible, su alteración, pérdida, tratamiento o acceso no autorizado.</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        </div>
+      </div>
+    </div>
+  </div>

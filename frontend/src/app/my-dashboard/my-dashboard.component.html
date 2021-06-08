@@ -1,0 +1,159 @@
+<br>
+
+<!-- <nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand"></a>
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Buscar cliente" aria-label="Search">
+    <button class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" type="submit">Buscar</button>
+  </form>
+</nav> -->
+
+<div class="container">
+<div class="col-md-14 col-14 col-sm-14">
+    <div class="card">
+      <div class="card-header">
+        <h4>Mi tablero</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tbody><tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Tipo</th>
+                <th>Fecha de inicio</th>
+                <th></th>
+            </tr>
+            <ng-container *ngIf="data != 0">
+            <tr *ngFor="let i of data">
+              <td>{{i.brand}}</td>
+              <td>{{i.model}}</td>
+              <td>{{i.type}}</td>
+              <td>{{i.process_start_date | date : 'short'}}</td>
+              <td>
+              <a class="btn btn-light btn-action btn-modal" class="btn btn btn-sm"  data-toggle="modal" data-target="#fsModal">
+                <a class="btn" (click)="moreInfo(i.id)" >
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg>
+                </a>
+              </a>
+                <a class="btn" (click)="bringData(i.id)" style="margin-left: 2px;" data-toggle="modal"  data-target="#staticBackdrop">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                    <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                  </svg>
+                </a>
+
+                <a type="button" class="btn" (click)="StatusChange(i.id, 3)">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" fill="currentColor" class="bi bi-check-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="M10.97 4.97a.235.235 0 0 0-.02.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-1.071-1.05z"/>
+                  </svg>
+                </a>
+              </td> 
+            </tr>
+          </ng-container>
+          </tbody></table>
+        </div>
+        <div *ngIf="data == 0" class="alert alert-primary text-center" role="alert">
+          No has colocado en curso ningún dispositivo
+          </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div id="fsModal"
+     class="modal animated bounceIn"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-lg " >
+    <div class="modal-content">
+      <div class="modal-body">
+        
+        <div class="card">
+          <ul class="list-group list-group-flush" *ngFor="let i of deviceInfo">
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del propietario</b></li>
+            <li class="list-group-item">
+              <br>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                    <b style="font-size: medium;">Nombre</b> <br>{{i.c_name}} {{i.c_surname}}
+                  </div>
+                  <div class="col-sm">
+                    <b style="font-size: medium;">Teléfono</b> <br> {{i.c_phone}}
+                  </div>
+                  <div class="col-sm" >
+                    <b style="font-size: medium;">Correo</b> <br> {{i.c_email}}
+                  </div>
+                </div>
+              </div> </li>
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del dispositivo</b>
+
+            </li>
+            <li class="list-group-item">
+              <b>Equipo:</b> {{i.type}}
+              <hr>
+              <b>Marca:</b> {{i.brand}}
+              <hr>
+              <b>Modelo:</b> {{i.model}}
+              <hr>
+              <b>Accesorios:</b> {{i.accessories}}
+              <hr>
+              <b>Estado del producto:</b> {{i.conditions}}
+              <hr>
+              <b>Trabajo a realizar:</b> {{i.work_to_do}}
+              <hr>
+              <b>Usuario que ingreso el dispositivo:</b> {{i.user}} , <b>Fecha de ingreso:</b> {{ i.admission_date | date : 'short' }}
+            </li>  
+          </ul>
+        </div>
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary"
+                data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar dispositivo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]='form' (ngSubmit)='updateData(edit)'>
+          <div class="form-group">
+            <label for="falla">Falla</label>
+            <textarea type="text" class="form-control" formControlName='failure'  id="falla"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="diagnostico">Diagnóstico</label>
+            <textarea type="text" formControlName='diagnosis'  class="form-control" id="diagnostico"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="solucion">Solución</label>
+            <textarea type="text" formControlName='solution' class="form-control" id="solucion"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary"  style="float: right;">Guardar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

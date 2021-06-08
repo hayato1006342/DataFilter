@@ -1,0 +1,210 @@
+<br>
+<!-- <nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand"></a>
+  <form class="form-inline">
+    <input class="form-control mr-sm-2" type="search" placeholder="Buscar cliente" aria-label="Search">
+    <button class="btn btn-outline-success mr-sm-2 my-2 my-sm-0" type="submit">Buscar</button>
+    <button class="btn btn-primary my-2 my-sm-0" type="submit">Filtrar</button>
+  </form>
+</nav> -->
+
+<div class="container">
+<div class="col-md-20 col-20 col-sm-20">
+    <div class="card">
+      <div class="card-header">
+        <h4>Dispositivos pendientes</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tbody>
+              <tr>
+                <th>Marca</th>
+                <th>Modelo</th>
+                <th>Tipo</th>
+                <th>Fecha de ingreso</th>
+                <th>Ingresado por</th>
+                <th>Opciones</th>
+                <th></th>
+              </tr>
+              <ng-container *ngIf="data != 0">
+                <tr *ngFor="let i of data" >
+                  <td>{{i.brand}}</td>
+                  <td>{{i.model}}</td>
+                  <td>{{i.type}}</td>
+                  <td>{{i.admission_date | date : 'short' }}</td>
+                  <td style="color: red;">@{{i.user}}</td>
+                  <td>
+                    <a class="btn btn-light btn-action btn-modal " class="btn btn btn-sm" (click)="moreInfo(i.id)" data-toggle="modal" data-target="#fsModal">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                        <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                        <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                      </svg>
+                    </a>
+                    <a class="btn" style="margin-left: 2px;" data-toggle="modal" (click)="getDataEdit(i.id)" data-target="#staticBackdrop">
+                      <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-pen-fill" viewBox="0 0 16 16">
+                        <path d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"/>
+                      </svg>
+                    </a>
+                    <a class="btn btn btn-action btn-sm" style="margin-left: 2px;" (click)="delete(i.id)">
+                      <svg class="svg-icon" viewBox="0 0 20 20">
+                          <path fill="none" d="M16.471,5.962c-0.365-0.066-0.709,0.176-0.774,0.538l-1.843,10.217H6.096L4.255,6.5c-0.066-0.362-0.42-0.603-0.775-0.538C3.117,6.027,2.876,6.375,2.942,6.737l1.94,10.765c0.058,0.318,0.334,0.549,0.657,0.549h8.872c0.323,0,0.6-0.23,0.656-0.549l1.941-10.765C17.074,6.375,16.833,6.027,16.471,5.962z"></path>
+                          <path fill="none" d="M16.594,3.804H3.406c-0.369,0-0.667,0.298-0.667,0.667s0.299,0.667,0.667,0.667h13.188c0.369,0,0.667-0.298,0.667-0.667S16.963,3.804,16.594,3.804z"></path>
+                          <path fill="none" d="M9.25,3.284h1.501c0.368,0,0.667-0.298,0.667-0.667c0-0.369-0.299-0.667-0.667-0.667H9.25c-0.369,0-0.667,0.298-0.667,0.667C8.583,2.985,8.882,3.284,9.25,3.284z"></path>
+                      </svg>
+                    </a>
+                  </td>
+                  <td>
+                  <popover-content #myPopover 
+                  title="Información"
+                  placement="left top"
+                  [animation]="true" 
+                  [closeOnClickOutside]="true" >
+                  <p>Este botón te permitirá poner el dispositivo en curso</p>
+                  </popover-content>
+                  <button  type="button" class="btn btn-warning btn-sm" role="button" [popover]="myPopover" ><svg class="svg-icon" viewBox="0 0 20 20" (click)="start_process(i.id)">
+                    <path d="M12.522,10.4l-3.559,3.562c-0.172,0.173-0.451,0.176-0.625,0c-0.173-0.173-0.173-0.451,0-0.624l3.248-3.25L8.161,6.662c-0.173-0.173-0.173-0.452,0-0.624c0.172-0.175,0.451-0.175,0.624,0l3.738,3.736C12.695,9.947,12.695,10.228,12.522,10.4 M18.406,10c0,4.644-3.764,8.406-8.406,8.406c-4.644,0-8.406-3.763-8.406-8.406S5.356,1.594,10,1.594C14.643,1.594,18.406,5.356,18.406,10M17.521,10c0-4.148-3.374-7.521-7.521-7.521c-4.148,0-7.521,3.374-7.521,7.521c0,4.147,3.374,7.521,7.521,7.521C14.147,17.521,17.521,14.147,17.521,10"></path>
+                  </svg>
+                </button>
+                  </td>
+                </tr>
+              </ng-container> 
+          </tbody>
+          </table>
+          <div *ngIf="data == 0" class="alert alert-primary text-center" role="alert">
+            No hay dispositivos pendientes
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<!-- modal -->
+<div id="fsModal"
+     class="modal animated bounceIn"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+  <!-- dialog -->
+  <div class="modal-dialog modal-lg">
+
+    <!-- content -->
+    <div class="modal-content">
+      
+      <!-- body -->
+      <div class="modal-body">
+        
+        <div class="card">
+          <ul class="list-group list-group-flush" *ngFor="let i of more">
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del propietario</b></li>
+            <li class="list-group-item">
+              <br>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                    <b style="font-size: medium;">Nombre</b> <br>{{i.c_name}} {{i.c_surname}}
+                  </div>
+                  <div class="col-sm">
+                    <b style="font-size: medium;">Teléfono</b> <br> {{i.c_phone}}
+                  </div>
+                  <div class="col-sm" >
+                    <b style="font-size: medium;">Correo</b> <br> {{i.c_email}}
+                  </div>
+                </div>
+              </div> </li>
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del dispositivo</b>
+
+            </li>
+            <li class="list-group-item">
+            <b>Marca:</b> {{i.brand}}
+            <hr>
+            <b>Modelo:</b> {{i.model}}
+            <hr>
+            <b>Accesorios:</b> {{i.accessories}}
+            <hr>
+            <b>Estado del producto:</b> {{i.conditions}}
+            <hr>
+            <b>Trabajo a realizar:</b> {{i.work_to_do}}
+            </li>
+            <!-- <li class="list-group-item"><b>Modelo:</b> {{i.model}}</li>
+            <li class="list-group-item"><b>Accesorios:</b> {{i.accessories}} </li>
+            <li class="list-group-item"><b>Estado del producto:</b> {{i.conditions}} </li>
+            <li class="list-group-item"><b>Trabajo a realizar:</b> {{i.work_to_do}} </li> -->
+          </ul>
+        </div>
+
+        <!-- <div class="card">
+          <div class="card-body">
+            
+            <h4>Motivo de ingreso</h4>
+
+            <p>Liquor ipsum dolor sit amet bearded lady, grog murphy's bourbon lancer. Kamikaze vodka gimlet; old rip van winkle, lemon drop martell salty dog tom collins smoky martini ben nevis man o'war. Strathmill grand marnier sea breeze b & b mickey slim. Cactus jack aberlour seven and seven, beefeater early times beefeater kalimotxo royal arrival jack rose. Cutty sark scots whisky b & b harper's finlandia agent orange pink lady three wise men gin fizz murphy's. Chartreuse french 75 brandy daisy widow's cork 7 crown ketel one captain morgan fleischmann's, hayride, edradour godfather. Long island iced tea choking hazard black bison, greyhound harvey wallbanger, "gibbon kir royale salty dog tonic and tequila."</p>
+
+          </div>
+        </div> -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary"
+                data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
+
+<div class="modal fade" id="staticBackdrop" data-backdrop="static" data-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title">Editar dispositivo</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]='form' (ngSubmit)='edit()'>
+          <div class="form-group">
+            <label for="equipo">Equipo</label>
+            <input type="text" formControlName='device' class="form-control" id="equipo" aria-describedby="emailHelp">
+            <!-- <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small> -->
+          </div>
+          <div class="form-group">
+            <label for="modelo">Modelo</label>
+            <input type="text" formControlName='model'  class="form-control" id="modelo">
+          </div>
+          <div class="form-group">
+            <label for="marca">Marca</label>
+            <input type="text" class="form-control" formControlName='brand' id="marca">
+          </div>
+          <div class="form-group">
+            <label for="serie">Serie</label>
+            <input type="text" class="form-control" formControlName='serial' id="serie">
+          </div>
+          <div class="form-group">
+            <label for="accesorios">Accesorios</label>
+            <textarea type="text" class="form-control" formControlName='accessories' id="accesorios"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="estado">Estado del producto</label>
+            <textarea type="text" class="form-control" formControlName='condition' id="estado"></textarea>
+          </div>
+          <div class="form-group">
+            <label for="otros">Trabajo a realizar</label>
+            <textarea type="text" class="form-control" formControlName='work_to_do' id="otros"></textarea>
+          </div>
+          <button type="submit" class="btn btn-primary"  style="float: right;">Cambiar</button>
+        </form>
+      </div>
+
+    </div>
+  </div>
+</div>

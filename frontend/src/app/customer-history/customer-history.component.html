@@ -1,0 +1,204 @@
+<br>
+<table  datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger">
+  <thead>
+    <tr>
+      <th scope="col">Nombre</th>
+      <th scope="col">Apellido</th>
+      <th scope="col">Cédula</th>
+      <th scope="col">Correo electrónico</th>
+      <th scope="col">Ver mas</th>
+    </tr>
+  </thead>
+  <tbody >
+    <tr *ngFor="let i of data">
+      <td>{{ i.name }}</td>
+      <td>{{ i.surname }}</td>
+      <td>{{ i.identification }}</td>
+      <td>{{ i.email }}</td>
+      <td>
+        <button type="button" class="btn" (click)="clientDevices(i.identification)" data-toggle="modal" data-target="#info">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-clipboard" viewBox="0 0 16 16">
+          <path d="M4 1.5H3a2 2 0 0 0-2 2V14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V3.5a2 2 0 0 0-2-2h-1v1h1a1 1 0 0 1 1 1V14a1 1 0 0 1-1 1H3a1 1 0 0 1-1-1V3.5a1 1 0 0 1 1-1h1v-1z"/>
+          <path d="M9.5 1a.5.5 0 0 1 .5.5v1a.5.5 0 0 1-.5.5h-3a.5.5 0 0 1-.5-.5v-1a.5.5 0 0 1 .5-.5h3zm-3-1A1.5 1.5 0 0 0 5 1.5v1A1.5 1.5 0 0 0 6.5 4h3A1.5 1.5 0 0 0 11 2.5v-1A1.5 1.5 0 0 0 9.5 0h-3z"/>
+        </svg></button>
+        <button id="buton" type="button" class="btn" (click)="getClients(i.identification)" data-toggle="modal" data-target="#editClient">
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-file-earmark-person" viewBox="0 0 16 16">
+            <path d="M11 8a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+            <path d="M14 14V4.5L9.5 0H4a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2zM9.5 3A1.5 1.5 0 0 0 11 4.5h2v9.255S12 12 8 12s-5 1.755-5 1.755V2a1 1 0 0 1 1-1h5.5v2z"/>
+          </svg>
+        </button>
+        <popover-content #myPopover 
+                  title='Advertencia'
+                  placement="left top"
+                  [animation]="true" 
+                  [closeOnClickOutside]="true" >
+                  <p>Este proceso eliminara todos los datos del cliente, incluyendo los dispositivos</p>
+        </popover-content>
+        <button id="buton" type="button" class="btn" (click)="deleteClient(i.identification)" [popover]="myPopover">
+          <svg xmlns="http://www.w3.org/2000/svg" style="color: red;" width="16" height="16" fill="currentColor" class="bi bi-trash" viewBox="0 0 16 16">
+            <path d="M5.5 5.5A.5.5 0 0 1 6 6v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm2.5 0a.5.5 0 0 1 .5.5v6a.5.5 0 0 1-1 0V6a.5.5 0 0 1 .5-.5zm3 .5a.5.5 0 0 0-1 0v6a.5.5 0 0 0 1 0V6z"/>
+            <path fill-rule="evenodd" d="M14.5 3a1 1 0 0 1-1 1H13v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V4h-.5a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1H6a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1h3.5a1 1 0 0 1 1 1v1zM4.118 4 4 4.059V13a1 1 0 0 0 1 1h6a1 1 0 0 0 1-1V4.059L11.882 4H4.118zM2.5 3V2h11v1h-11z"/>
+          </svg>
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Este modal es para ver la información de los dispositivos del cliente -->
+<div class="modal fade" id="info" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Dispositivos del cliente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">                       
+        <table class="table">
+          <thead class="thead-dark" >
+            <tr >
+              <th scope="col">Equipo</th>
+              <th scope="col">Modelo</th>
+              <th scope="col">Marca</th>
+              <th scope="col">Ingresado por</th>
+              <th scope="col">Fecha de ingreso</th>
+              <th scope="col">Estado</th>
+              <th scope="col"></th>
+            </tr>
+          </thead>
+          <tbody *ngIf="history != 0">
+            <tr *ngFor="let i of history" >
+              <td>{{i.type}}</td>
+              <td>{{i.model}}</td>
+              <td>{{i.brand}}</td>
+              <td>{{i.user}}</td>
+              <td>{{i.admission_date | date: 'short'}}</td>
+              <td>
+                 <div *ngIf="i.status == 1" style="color: orange;" > pendiente</div>
+                 <div *ngIf="i.status == 2" style="color: rgb(0, 89, 255);" > En curso</div>
+                 <div *ngIf="i.status == 3" style="color: rgb(21, 255, 99);" > Finalizado</div> 
+                 <div *ngIf="i.status == 4" style="color: rgb(0, 94, 86);" > Fue reclamado</div> 
+                </td>
+              <td>
+                <button *ngIf="i.status != 1" class="btn" type="button" (click)="InfoDevice(i.id)"  data-dismiss="modal" class="close"  data-toggle="modal" data-target="#staticBackdrop22">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg>
+                </button>
+              </td>
+            </tr>
+            
+          </tbody>
+        </table>
+        <div *ngIf="history == 0" class="alert alert-primary text-center" role="alert">
+          El cliente no tiene dispositivos.
+        </div>
+        </div>
+        <div class="modal-footer">
+                <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+              </div>
+            </div>
+        </div>
+    </div>
+
+
+<div class="modal" id="staticBackdrop22" data-backdrop="static" tabindex="-1"   aria-labelledby="staticBackdropLabel" >
+  <div class="modal-dialog modal-dialog-scrollable modal-xl">
+    <div class="modal-content">
+
+      <div class="modal-body">
+        <div class="card">
+          <ul class="list-group list-group-flush" *ngFor="let i of infodeviceData">
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del proceso</b></li>
+            <li class="list-group-item">
+              <b>Persona encargada:</b> {{i.name}}
+              <hr>
+              <b>Fecha de inicio de proceso:</b> {{i.process_start_date | date: 'short'}}
+              <hr>
+              <b>Fecha de finalización:</b> {{i.finish_date | date: 'short'}} 
+              <hr>
+              <b>Fecha de retiro:</b> {{i.departure_date | date: 'short'}}
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del dispositivo</b>
+            </li>
+            <li class="list-group-item">
+            <b>Falla:</b> {{i.failure}}
+            <hr>
+            <b>Diagnostico:</b> {{i.diagnosis}}
+            <hr>
+            <b>Solucion:</b> {{i.solution}}
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-toggle="modal" data-target="#info" data-dismiss="modal">Cerrar</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+
+<!-- Este modal es para editar los datos del cliente -->
+<div class="modal fade" id="editClient" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Información del cliente</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]='form'>
+          <div class="form-group">
+            <div class="row">
+              <div class="col-12 mb-4">
+                <label for="exampleFormControlFile1">Nombre del cliente</label>
+                <input class="form-control mt-2" formControlName='name' type="text" [readOnly]="!boleano">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 mb-4">
+                <label for="exampleFormControlFile1">Apellido del cliente</label>
+                <input class="form-control mt-2" formControlName='surname' type="text" [readOnly]="!boleano">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 mb-4">
+                <label for="exampleFormControlFile1">Teléfono del cliente</label>
+                <input class="form-control mt-2" formControlName='phone' type="text" [readOnly]="!boleano">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 mb-4">
+                <label for="exampleFormControlFile1">Correo electrónico del cliente</label>
+                <input class="form-control mt-2" formControlName='email' type="text" [readOnly]="!boleano">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 mb-4">
+                <label for="exampleFormControlFile1">Dirección del cliente</label>
+                <input class="form-control mt-2" formControlName='address' type="text" [readOnly]="!boleano">
+              </div>
+            </div>
+            <div class="row">
+              <div class="col-12 d-flex mt-3 justify-content-end font-weight-bold">
+                <label class="mt-2 mr-1" for="exampleFormControlFile1">Editar datos</label>
+                <button class="mr-4 btn btn-link" (click)="boleano = !boleano"><img id="lapiz" src="https://cdn.pixabay.com/photo/2013/10/04/11/48/pencil-190586_960_720.png" alt="" width="30px"></button>
+              </div>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-dismiss="modal">Cerrar</button>
+        <button *ngIf="boleano" type="button" (click)="updateClient()" class="btn btn-primary" >Guardar</button>
+      </div>
+    </div>
+  </div>
+</div>

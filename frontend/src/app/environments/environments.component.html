@@ -1,0 +1,197 @@
+<app-navbar></app-navbar>
+
+
+    <!-- Page Wrapper -->
+    <div id="wrapper">
+
+        <!-- Sidebar -->
+        <ul class="navbar-nav bg-gradient-primary sidebar sidebar-dark accordion" id="accordionSidebar">
+
+            <!-- Sidebar - Brand -->
+
+
+            <!-- Divider -->
+            <hr class="sidebar-divider my-0">
+
+            <!-- Nav Item - Dashboard -->
+            <li class="nav-item active">
+                <a class="btn nav-link" (click)="mydashboardv()">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Mi tablero</span></a>
+            </li>
+            
+            <!-- Divider -->
+            <hr class="sidebar-divider">
+
+            <li class="nav-item active">
+                <a class="btn nav-link" (click)="customerHistory()">
+                    <i class="fas fa-fw fa-tachometer-alt"></i>
+                    <span>Historial</span></a>
+            </li>
+
+            <!-- <hr class="sidebar-divider"> -->
+
+
+            <!-- Nav Item - Charts 
+            <li class="nav-item">
+                <a class="nav-link" href="#">
+                    <i class="fas fa-fw fa-chart-area"></i>
+                    <span>Nose</span></a>
+            </li>
+
+            <li class="nav-item">
+                <a class="nav-link" href="tables.html">
+                    <i class="fas fa-fw fa-table"></i>
+                    <span>Nose</span></a>
+            </li>
+
+             Divider -->
+            <hr class="sidebar-divider d-none d-md-block">
+
+        </ul>
+        <!-- End of Sidebar -->
+
+        <!-- Content Wrapper -->
+        <div id="content-wrapper" class="d-flex flex-column">
+
+            <!-- Main Content -->
+            <div id="content">
+
+                <!-- Topbar -->
+                <nav class="navbar navbar-expand navbar-light bg-white topbar mb-4 static-top shadow">
+                    <div *ngFor="let i of date_environment">
+                        <h4>{{i.name}}</h4>
+                    </div>
+                    <!-- Topbar Navbar -->
+                    <ul class="navbar-nav ml-auto">
+         
+                        <li class="nav-item dropdown no-arrow d-sm-none">
+                            <a class="nav-link dropdown-toggle" href="#" id="searchDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-search fa-fw"></i>
+                            </a>
+
+                            <div class="dropdown-menu dropdown-menu-right p-3 shadow animated--grow-in"
+                                aria-labelledby="searchDropdown">
+                                <form class="form-inline mr-auto w-100 navbar-search">
+                                    <div class="input-group">
+                                        <input type="text" class="form-control bg-light border-0 small"
+                                            placeholder="Search for..." aria-label="Search"
+                                            aria-describedby="basic-addon2">
+                                        <div class="input-group-append">
+                                            <button class="btn btn-primary" type="button">
+                                                <i class="fas fa-search fa-sm"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </form>
+                            </div>
+                        </li>
+
+                        <li class="nav-item dropdown no-arrow">
+                            <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
+                                data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <span class="btn btn-secondary">Opciones</span>
+                                
+                            </a>
+             
+                            
+                            <div class="dropdown-menu dropdown-menu-right shadow animated--grow-in"
+                                aria-labelledby="userDropdown">
+                                <a class="dropdown-item"(click)="registerclient()">
+                                    <i class="fas fa-user fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Registrar cliente
+                                </a>
+                                <a class="dropdown-item" (click)="registerdevice()">
+                                    <i class="fas fa-cogs fa-sm fa-fw mr-2 text-gray-400"></i>
+                                    Registrar dispositivo
+                                </a>
+                            </div>
+                        </li>
+                        
+                    </ul>
+
+                </nav>
+
+
+                <div class="container-fluid">
+
+                    <!-- Page Heading -->
+                    <div class="d-sm-flex align-items-center justify-content-between mb-1">
+
+                        <h1 class="h3 mb-0 text-gray-800"></h1>
+                        <div class="row">
+                            <div class="col-xl-4 col-md-4 mb-2" >
+                                <button type="button" class="btn btn-warning" (click)="pendingDevices()">
+                                    Pendientes <span class="badge badge-light" *ngIf="count != 0">
+                                        <div *ngFor="let i of count">
+                                            <div *ngIf="i.status == 1">
+                                                {{i.amount}}
+                                            </div>
+                                        </div>
+                                    </span>
+                                  </button>
+                            </div>
+                            <div class="col-xl-3 col-md-4 mb-2">
+                                <button type="button" class="btn btn-primary" (click)="progressDevices()">
+                                    En_curso <span class="badge badge-light"  *ngIf="count != 0">      
+                                        <div *ngFor="let i of count">
+                                            <div *ngIf="i.status == 2">
+                                                {{i.amount}}
+                                            </div>
+                                        </div>
+                                    </span>
+                                  </button>
+                            </div>
+                            <div class="col-xl-1 col-md-3 mb-2">
+                                <button type="button" class="btn btn-success" (click)="finishedDivices()">
+                                    Finalizados <span class="badge badge-light" *ngIf="count != 0">
+                                        <div *ngFor="let i of count">
+                                            <div *ngIf="i.status == 3">
+                                                {{i.amount}}
+                                            </div>
+                                        </div>                              
+                                    </span>
+                                  </button>
+                            </div>
+                            
+                        </div>
+                    </div>
+
+                    <div *ngIf="mydashboard">
+                        <app-my-dashboard></app-my-dashboard>
+                    </div>
+
+                    <app-add-devices *ngIf="btnregisterdevice"></app-add-devices>
+                    <app-register-clients *ngIf="btnregisterclient"></app-register-clients>
+                    <app-pending-devices *ngIf="btnpending"></app-pending-devices>
+                    <app-devices-in-progress *ngIf="btnprogress"></app-devices-in-progress>
+                    <app-finished-divices *ngIf="btnfinished" ></app-finished-divices>
+                    <div *ngIf="btnhistory">
+                        <div>
+                            <h4 class="h3 mb-0 text-gray-800">Historial</h4>
+                        </div>
+                        <br>
+                        <app-customer-history ></app-customer-history>
+                    </div>
+                      <!-- AQUI -->
+
+            <!-- Footer 
+            <footer class="sticky-footer bg-white">
+                <div class="container my-auto">
+                    <div class="copyright text-center my-auto">
+                        <span>Copyright &copy; Your Website 2021</span>
+                    </div>
+                </div>
+            </footer>
+            -->
+
+        </div>
+        <!-- End of Content Wrapper -->
+
+    </div>
+    <!-- End of Page Wrapper -->
+
+<app-footer></app-footer>
+ 
+

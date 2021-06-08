@@ -1,0 +1,51 @@
+<div class="page-content container">
+    <br>
+    <div class="container px-0">
+        <div class="row">
+            <div class="col-1">
+                <a href="#" class="btn btn-primary" [routerLink]="['/']" >Volver</a>
+            </div>
+            <div class="col-11 text-right">
+                <a class="btn btn-success" (click)="generatepdf()">Imprimir</a>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-sm-3 mr-0 mr-md-5">
+                <div class="row justify-content-center"><img class="img-fluid img-circle mt-2 mt-md-4" [src]="data.environment[0].e_img" ></div>
+                <h3 class="text-center mt-4 mb-4" style="font-size: 40px;">{{data.environment[0].e_name}}</h3>
+                <hr>
+                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90" style="font-size: 16px;">Administrador: </span> <span class="text-600 text-90" style="font-size: 16px;">{{data.environment[0].u_name}} {{data.environment[0].u_surname}}</span></div>
+                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90" style="font-size: 16px;">Cliente: </span> <span class="text-600 text-90" style="font-size: 16px;">{{data.environment[0].c_name}} {{data.environment[0].c_surname}}</span></div>
+                <div class="my-2"><i class="fa fa-circle text-blue-m2 text-xs mr-1"></i> <span class="text-600 text-90" style="font-size: 16px;">Cédula: </span> <span class="text-600 text-90" style="font-size: 16px;">{{data.environment[0].c_identification}}</span></div>
+            </div>
+            <div class="col-sm-8 ml-0 ml-md-3">
+                <div class="table-responsive mt-4" id="table">
+                    <table class="table">
+                        <thead>
+                        <tr>
+                            <th scope="col">Dispositivo</th>
+                            <th scope="col">Falla</th>
+                            <th scope="col">Diagnistico</th>
+                            <th scope="col">Solución</th>
+                            <th scope="col">Estado</th>
+                        </tr>
+                        </thead>
+                        <tbody>
+                            <tr *ngFor="let i of data.consult">
+                                <td>{{i.d_type}} {{i.d_brand}}</td>
+                                <td>{{i.d_failure}}</td>
+                                <td>{{i.d_diagnosis}}</td>
+                                <td>{{i.d_solution}}</td>
+                                <td>
+                                    <p *ngIf="i.d_status == 1" style="background-color: rgb(230, 248, 71); border-radius: 10px; padding-left: 2px; padding-right: 2px;">Pendiente</p>
+                                    <p *ngIf="i.d_status == 2" style="background-color: rgb(0, 178, 248); border-radius: 10px; padding-left: 2px; padding-right: 2px;">En curso</p>
+                                    <p *ngIf="i.d_status == 3" style="background-color: rgb(34, 221, 59); border-radius: 10px; padding-left: 2px; padding-right: 2px;">Finalizado</p>
+                                    <p *ngIf="i.d_status == 4" style="background-color: #22dd3b; border-radius: 10px; padding-left: 2px; padding-right: 2px;">Entregado</p>
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>

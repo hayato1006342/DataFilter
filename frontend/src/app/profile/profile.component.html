@@ -1,0 +1,95 @@
+<app-navbar></app-navbar>
+
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">Cambiar contraseña</h5>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button>
+        </div>
+        <div class="modal-body">
+            <form [formGroup]='formPassword' (ngSubmit)='changePassword()'>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">Nueva contraseña</span>
+                    </div>
+                    <input type="password" class="form-control" formControlName='password' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                      <span class="input-group-text" id="inputGroup-sizing-default">Repita la contraseña</span>
+                    </div>
+                    <input type="password" class="form-control" formControlName='validatepassword' aria-label="Sizing example input" aria-describedby="inputGroup-sizing-default">
+                </div>
+
+                <button type="submit" class="btn btn-primary">Cambiar</button>
+            </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<div class="container profile profile-view" id="profile">
+    <div class="row">
+        <div class="col-md-12 alert-col relative">
+            <div class="alert alert-info absolue center" role="alert"><button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">×</span></button><span>Profile save with success</span></div>
+        </div>
+    </div>
+    <form  [formGroup]="form">
+        <div class="form-row profile-row">
+            <div class="col-md-12 mb-4 d-flex justify-content-end">
+                <button button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+                    Cambiar Contraseña 
+                  </button>
+            </div>
+            <div class="col-md-4 mt-0 mt-md-3 mb-3 relative">
+                <div class="avatar" *ngFor="let i of data">
+                    <h2 class="text-center">Foto</h2>
+                    <div class="avatar-bg center" style="background: url({{i.img}}); background-position: 50% 50%; height: 200px; width: 200px; background-size: cover; border-radius: 50%; margin-left: calc(50% - 100px);"></div>
+                    <p>Cambiar foto</p>
+                </div>
+                    <input type="file" accept=".png, .jpg"  (change)='changeImage($event)' class="form-control"   name="avatar-file" >
+                
+                    <div class="progress" style="height: 12px;">
+                        <div class="progress-bar" role="progressbar"  [style.width]="(uploadPercent | async ) +'%'"  aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                      </div>
+                    <br>
+
+                    <button type="button" (click)="uploadImage()" *ngIf="loadbutton"  class="btn btn-primary" >Subir</button>
+                    
+                </div>
+            <div class="col-md-8">
+                <h2 class="mt-4 mt-md-0 text-center">Perfil </h2>
+                <hr>
+                <form [formGroup]='form' (ngSubmit)="Rename()">
+                    <div class="form-row">
+                        <div class="col-sm-6 col-md-6">
+                            <div class="form-group"><label>Nombre </label><input class="form-control" formControlName="name" type="text" [readOnly]="boleano" ></div>
+                        </div>
+                        <div class="col-sm-5">
+                            <div class="form-group"><label>Apellido </label><input class="form-control" formControlName="surname" type="text" [readOnly]="boleano"></div>
+                        </div>
+                        <div class="col-sm-1 text-center mt-2">
+                            <a (click)="boleano = !boleano"><img class="mb-5 mb-md-0 mt-0 mt-md-4" id="lapiz" src="https://cdn.pixabay.com/photo/2013/10/04/11/48/pencil-190586_960_720.png" alt="" width="30px"></a>
+                        </div>
+                    </div>
+            
+                    <div class="form-row mb-5 mb-md-3">
+                        <div class="col-sm-11">
+                            <label>Email </label><input class="form-control" type="email" formControlName="email" readonly>
+                        </div>
+                    </div>
+
+                    <hr class="mb-5 mb-md-5">
+                    <div class="form-row">
+                        <div *ngIf="!boleano || !boleano3" class="col-md-12 content-right">
+                            <button id="save" class="btn btn-primary form-btn mb-3" type="submit">Guardar</button>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </form>
+</div> 

@@ -1,0 +1,165 @@
+<br>
+
+<nav class="navbar navbar-light bg-light">
+  <a class="navbar-brand"></a>
+  <div  class="form-inline" >
+    <input  class="form-control mr-sm-2" (keyup)="search($event.target.value)"  type="search" placeholder="Buscar colaborador" aria-label="Search">
+  </div>
+</nav>
+
+<div class="container">
+<div class="col-md-14 col-14 col-sm-14">
+    <div class="card">
+      <div class="card-header">
+        <h4>Dispositivos en curso</h4>
+      </div>
+      <div class="card-body">
+        <div class="table-responsive">
+          <table class="table table-striped">
+            <tbody><tr>
+              <th>Marca</th>
+              <th>Modelo</th>
+              <th>Tipo</th>
+              <th>Fecha de inicio</th>
+              <th>Inicio proceso</th>
+              <th>Opciones</th>
+            </tr>
+            <ng-container *ngIf="noresults != 1">
+            
+            <ng-container *ngIf="data != 0">
+            <tr *ngFor="let i of data">
+              <td>{{i.brand}}</td>
+              <td>{{i.model}}</td>
+              <td>{{i.type}}</td>
+              <td>{{i.process_start_date | date : 'short'}}</td>
+              <td style="color: red;">@{{i.start_process}}</td>
+              <td>
+                <a class="btn mr-1 btn-modal" (click)="moreInfo(i.id)" data-toggle="modal" data-target="#fsModal">
+                  <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-info-circle" viewBox="0 0 16 16">
+                    <path d="M8 15A7 7 0 1 1 8 1a7 7 0 0 1 0 14zm0 1A8 8 0 1 0 8 0a8 8 0 0 0 0 16z"/>
+                    <path d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"/>
+                  </svg>
+                </a>
+                
+                <!-- <a class="btn btn-danger btn-action mr-1">
+                    <svg class="svg-icon" viewBox="0 0 20 20">
+                        <path fill="none" d="M16.471,5.962c-0.365-0.066-0.709,0.176-0.774,0.538l-1.843,10.217H6.096L4.255,6.5c-0.066-0.362-0.42-0.603-0.775-0.538C3.117,6.027,2.876,6.375,2.942,6.737l1.94,10.765c0.058,0.318,0.334,0.549,0.657,0.549h8.872c0.323,0,0.6-0.23,0.656-0.549l1.941-10.765C17.074,6.375,16.833,6.027,16.471,5.962z"></path>
+                        <path fill="none" d="M16.594,3.804H3.406c-0.369,0-0.667,0.298-0.667,0.667s0.299,0.667,0.667,0.667h13.188c0.369,0,0.667-0.298,0.667-0.667S16.963,3.804,16.594,3.804z"></path>
+                        <path fill="none" d="M9.25,3.284h1.501c0.368,0,0.667-0.298,0.667-0.667c0-0.369-0.299-0.667-0.667-0.667H9.25c-0.369,0-0.667,0.298-0.667,0.667C8.583,2.985,8.882,3.284,9.25,3.284z"></path>
+                    </svg>
+                </a> -->
+                <!-- <a class="btn btn-danger btn-action">
+                    <svg class="svg-icon" viewBox="0 0 20 20">
+                        <path fill="none" d="M16.471,5.962c-0.365-0.066-0.709,0.176-0.774,0.538l-1.843,10.217H6.096L4.255,6.5c-0.066-0.362-0.42-0.603-0.775-0.538C3.117,6.027,2.876,6.375,2.942,6.737l1.94,10.765c0.058,0.318,0.334,0.549,0.657,0.549h8.872c0.323,0,0.6-0.23,0.656-0.549l1.941-10.765C17.074,6.375,16.833,6.027,16.471,5.962z"></path>
+                        <path fill="none" d="M16.594,3.804H3.406c-0.369,0-0.667,0.298-0.667,0.667s0.299,0.667,0.667,0.667h13.188c0.369,0,0.667-0.298,0.667-0.667S16.963,3.804,16.594,3.804z"></path>
+                        <path fill="none" d="M9.25,3.284h1.501c0.368,0,0.667-0.298,0.667-0.667c0-0.369-0.299-0.667-0.667-0.667H9.25c-0.369,0-0.667,0.298-0.667,0.667C8.583,2.985,8.882,3.284,9.25,3.284z"></path>
+                    </svg>
+                </a> -->
+              </td>
+              <!-- <td>
+                <button type="button" class="btn btn-warning">Iniciar proceso</button>
+              </td> -->
+            </tr>
+          </ng-container>
+        </ng-container>
+          </tbody></table>
+        </div>
+        <div *ngIf="data == 0" class="alert alert-primary text-center" role="alert">
+          No hay dispositivos en progreso
+        </div>
+        <div *ngIf="noresults == 1" class="alert alert-primary text-center" role="alert">
+          No se encontraron resultados
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<!-- modal -->
+<div id="fsModal"
+     class="modal animated bounceIn"
+     tabindex="-1"
+     role="dialog"
+     aria-labelledby="myModalLabel"
+     aria-hidden="true">
+
+  <!-- dialog -->
+  <div class="modal-dialog modal-lg">
+
+    <!-- content -->
+    <div class="modal-content">
+      
+      <!-- body -->
+      <div class="modal-body">
+        
+        <div class="card">
+          <ul class="list-group list-group-flush" *ngFor="let i of more">
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del propietario</b></li>
+            <li class="list-group-item">
+              <br>
+              <div class="container">
+                <div class="row">
+                  <div class="col-sm">
+                    <b style="font-size: medium;">Nombre</b> <br> {{i.c_name}} {{i.c_surname}}
+                  </div>
+                  <div class="col-sm">
+                    <b style="font-size: medium;">Teléfono</b> <br> {{i.c_phone}}
+                  </div>
+                  <div class="col-sm" >
+                    <b style="font-size: medium;">Correo</b> <br> {{i.c_email}}
+                  </div>
+                </div>
+              </div> </li>
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Datos del dispositivo</b>
+
+            </li>
+            <li class="list-group-item">
+              <b>Equipo:</b> {{i.type}}
+              <hr>
+              <b>Marca:</b> {{i.brand}}
+              <hr>
+              <b>Modelo:</b> {{i.model}}
+              <hr>
+              <b>Accesorios:</b> {{i.accessories}}
+              <hr>
+              <b>Estado del producto:</b> {{i.conditions}}
+              <hr>
+              <b>Trabajo a realizar:</b> {{i.work_to_do}}
+              <hr>
+              <b>Usuario que ingreso el dispositivo:</b> {{i.user}} , <b>Fecha de ingreso:</b> {{ i.admission_date | date : 'short' }}
+            </li>
+            <li class="list-group-item text-center" style="background:#617c94; color: white;"><b>Detalles de la reparación</b>
+            <li class="list-group-item">
+              <b>Falla:</b> {{i.failure}}
+              <hr>
+              <b>Diagnóstico:</b> {{i.diagnosis}}
+              <hr>
+              <b>Solución:</b> {{i.solution}}
+              <hr>
+            </li>
+          </ul>
+        </div>
+
+        <!-- <div class="card">
+          <div class="card-body">
+            
+            <h4>Motivo de ingreso</h4>
+
+            <p>Liquor ipsum dolor sit amet bearded lady, grog murphy's bourbon lancer. Kamikaze vodka gimlet; old rip van winkle, lemon drop martell salty dog tom collins smoky martini ben nevis man o'war. Strathmill grand marnier sea breeze b & b mickey slim. Cactus jack aberlour seven and seven, beefeater early times beefeater kalimotxo royal arrival jack rose. Cutty sark scots whisky b & b harper's finlandia agent orange pink lady three wise men gin fizz murphy's. Chartreuse french 75 brandy daisy widow's cork 7 crown ketel one captain morgan fleischmann's, hayride, edradour godfather. Long island iced tea choking hazard black bison, greyhound harvey wallbanger, "gibbon kir royale salty dog tonic and tequila."</p>
+
+          </div>
+        </div> -->
+      </div>
+
+      <div class="modal-footer">
+        <button class="btn btn-secondary"
+                data-dismiss="modal">
+          Cerrar
+        </button>
+      </div>
+    </div>
+
+  </div>
+
+</div>
